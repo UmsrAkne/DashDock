@@ -6,19 +6,45 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
+    Margin="5"
     d:DataContext="{d:DesignInstance viewModels:TimeTrackingAreaViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource LightFgBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </UserControl.Resources>
+
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding InitializeAsyncCommand}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
-    <Grid>
+
+    <Border
+        Padding="8"
+        Background="{StaticResource DarkBgBrush}"
+        CornerRadius="6">
         <StackPanel>
             <TextBlock Text="{Binding Header}" />
-            <TextBlock Text="{Binding CurrentEntry.StartTime}" />
+            <StackPanel Margin="15,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Status: Progress" />
+                    <TextBlock Margin="15,0" Text="[ 10 min ]" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Opacity="0.8" Text="{Binding CurrentEntry.StartTime, StringFormat='{}{0:yyyy/MM/dd HH:mm:ss}'}" />
+                    <TextBlock
+                        Margin="15,0"
+                        FontWeight="Regular"
+                        Text="{Binding CurrentEntry.Description}" />
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-    </Grid>
+    </Border>
 </UserControl>

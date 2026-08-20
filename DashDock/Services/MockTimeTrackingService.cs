@@ -12,7 +12,16 @@ namespace DashDock.Services
         public Task<TimeEntry> GetCurrentTimeEntryAsync()
         {
             Console.WriteLine("GetCurrentTimeEntryAsync called");
-            return Task.FromResult(new TimeEntry());
+
+            const int timeOffset = 10;
+            var te = new TimeEntry()
+            {
+                StartTime = DateTime.Now.AddMinutes(-timeOffset),
+                EndTime = DateTime.Now.AddMinutes(-timeOffset),
+                Description = $"Mock Time Entry ({timeOffset}分前に開始)",
+            };
+
+            return Task.FromResult(te);
         }
     }
 }
