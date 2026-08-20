@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using DashDock.Services;
 using DashDock.ViewModels;
 using DashDock.Views;
 
@@ -14,6 +15,12 @@ public partial class App : PrismApplication
         containerRegistry.Register<IToolAreaViewModel, PointAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, TimeTrackingAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
+
+        #if DEBUG
+        containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
+        #else
+        containerRegistry.Register<ITimeTrackingService, TimeTrackingService>();
+        #endif
     }
 
     protected override Window CreateShell()
