@@ -1,4 +1,5 @@
-﻿using DashDock.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using DashDock.Models;
 using DashDock.Services;
 
 namespace DashDock.ViewModels
@@ -9,6 +10,7 @@ namespace DashDock.ViewModels
         private readonly CancellationTokenSource cts = new();
         private TimeEntry? currentEntry;
         private bool disposed;
+        private AsyncRelayCommand? initializeAsyncCommand;
 
         public TimeTrackingAreaViewModel(ITimeTrackingService service)
         {
@@ -16,7 +18,6 @@ namespace DashDock.ViewModels
             this.service = service;
 
             Console.WriteLine($"injected service: {service}");
-            _ = StartTimerLoopAsync(cts.Token);
         }
 
         public string Header { get; set; } = "Time Tracking Area";
@@ -26,6 +27,12 @@ namespace DashDock.ViewModels
             get => currentEntry;
             set => SetProperty(ref currentEntry, value);
         }
+
+        public AsyncRelayCommand InitializeAsyncCommand =>
+            initializeAsyncCommand ??= new AsyncRelayCommand(async () =>
+            {
+                await StartTimerLoopAsync(cts.Token);
+            });
 
         public void Dispose()
         {
