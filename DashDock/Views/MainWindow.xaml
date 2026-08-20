@@ -24,6 +24,10 @@
         <DataTemplate DataType="{x:Type viewModels:NoteAreaViewModel}">
             <views:NoteArea />
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:SettingAreaViewModel}">
+            <views:SettingArea />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
