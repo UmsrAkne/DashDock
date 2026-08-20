@@ -12,6 +12,15 @@ namespace DashDock.ViewModels
         private bool disposed;
         private AsyncRelayCommand? initializeAsyncCommand;
 
+        public TimeTrackingAreaViewModel()
+        {
+            // xaml プレビューを表示するために必要。普通にアプリを起動する場合は実行されない。
+            Console.WriteLine("[WARN] TimeTrackingAreaViewModel() execution!");
+            Console.WriteLine(" - 通常、デフォルトコンストラクタは実行されません。DI などで問題が起こっている可能性があります。");
+            service = new MockTimeTrackingService();
+            CurrentEntry = service.GetCurrentTimeEntryAsync().Result;
+        }
+
         public TimeTrackingAreaViewModel(ITimeTrackingService service)
         {
             Console.WriteLine("TimeTrackingAreaViewModel created");
