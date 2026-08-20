@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using DashDock.Models;
+using DashDock.Utils;
 
 namespace DashDock.Services
 {
@@ -8,8 +9,16 @@ namespace DashDock.Services
     {
         private const string ApiEndPoint = "/api/elite-tasks/active-task";
         private readonly static HttpClient HttpClient = new();
-        private readonly string serverIpv4Address = "127.0.0.1";
-        private readonly string port = "8000";
+        private readonly string serverIpv4Address;
+        private readonly int port;
+
+        public TimeTrackingService(AppSettings settings)
+        {
+            Console.WriteLine("TimeTrackingService created");
+            Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
+            serverIpv4Address = settings.TimeTrackingServerIpv4;
+            port = settings.TimeTrackingApiPort;
+        }
 
         public Task PostTimeEntryAsync(TimeEntry timeEntry)
         {
