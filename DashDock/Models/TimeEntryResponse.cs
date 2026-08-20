@@ -8,10 +8,10 @@ namespace DashDock.Models
         public string Key { get; set; } = string.Empty;
 
         [JsonPropertyName("t1")]
-        public long T1 { get; set; }
+        public double T1 { get; set; }
 
         [JsonPropertyName("t2")]
-        public long T2 { get; set; }
+        public double T2 { get; set; }
 
         [JsonPropertyName("ds")]
         public string? Ds { get; set; }

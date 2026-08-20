@@ -33,6 +33,9 @@ namespace DashDock.Services
                 var response = await HttpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
+                var str = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(str);
+
                 var eliteTask = await response.Content.ReadFromJsonAsync<TimeEntryResponse>();
                 if (eliteTask == null)
                 {
@@ -41,8 +44,8 @@ namespace DashDock.Services
 
                 return new TimeEntry
                 {
-                    StartTime = DateTimeOffset.FromUnixTimeSeconds(eliteTask.T1).LocalDateTime,
-                    EndTime = DateTimeOffset.FromUnixTimeSeconds(eliteTask.T2).LocalDateTime,
+                    StartTime = DateTimeOffset.FromUnixTimeSeconds((long)eliteTask.T1).LocalDateTime,
+                    EndTime = DateTimeOffset.FromUnixTimeSeconds((long)eliteTask.T2).LocalDateTime,
                     Description = eliteTask.Ds ?? string.Empty,
                 };
             }
