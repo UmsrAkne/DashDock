@@ -10,6 +10,9 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock Text="{Binding Header}" />
+        <StackPanel>
+            <TextBlock Text="{Binding Header}" />
+            <TextBlock Text="{Binding CurrentEntry.StartTime}" />
+        </StackPanel>
     </Grid>
 </UserControl>

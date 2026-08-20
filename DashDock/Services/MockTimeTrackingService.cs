@@ -11,6 +11,7 @@ namespace DashDock.Services
 
         public Task<TimeEntry> GetCurrentTimeEntryAsync()
         {
+            Console.WriteLine("GetCurrentTimeEntryAsync called");
             return Task.FromResult(new TimeEntry());
         }
     }
