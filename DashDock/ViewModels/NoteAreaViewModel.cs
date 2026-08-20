@@ -2,6 +2,6 @@
 {
     public class NoteAreaViewModel : BindableBase, IToolAreaViewModel
     {
-        public string Header { get; set; } = string.Empty;
+        public string Header { get; set; } = "Note Area";
     }
 }

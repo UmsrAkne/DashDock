@@ -5,10 +5,34 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
+    xmlns:views="clr-namespace:DashDock.Views"
     Title="{Binding Title}"
     Width="1024"
     Height="480"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     mc:Ignorable="d">
-    <Grid />
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:PointAreaViewModel}">
+            <views:PointArea />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:TimeTrackingAreaViewModel}">
+            <views:TimeTrackingArea />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels:NoteAreaViewModel}">
+            <views:NoteArea />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <ItemsControl ItemsSource="{Binding ToolAreaViewModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </Window>

@@ -2,6 +2,6 @@
 {
     public class PointAreaViewModel : BindableBase, IToolAreaViewModel
     {
-        public string Header { get; set; } = string.Empty;
+        public string Header { get; set; } = "Point Area";
     }
 }

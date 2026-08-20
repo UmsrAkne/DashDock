@@ -18,8 +18,12 @@
             {
                 Console.WriteLine(toolAreaViewModel);
             }
+
+            ToolAreaViewModels = toolAreaViewModelsList;
         }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
+
+        public IReadOnlyList<IToolAreaViewModel> ToolAreaViewModels { get; }
     }
 }
