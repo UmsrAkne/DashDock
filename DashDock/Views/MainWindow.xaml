@@ -32,6 +32,18 @@
 
     <Grid>
         <ItemsControl ItemsSource="{Binding ToolAreaViewModels}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="DockPanel.Dock" Value="Top" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ContentControl Content="{Binding}" />

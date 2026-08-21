@@ -20,10 +20,10 @@ public partial class App : PrismApplication
         Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
         containerRegistry.RegisterInstance(settings);
 
+        containerRegistry.Register<IToolAreaViewModel, SettingAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, PointAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, TimeTrackingAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
-        containerRegistry.Register<IToolAreaViewModel, SettingAreaViewModel>();
 
         #if DEBUG
         containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
