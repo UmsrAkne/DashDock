@@ -10,6 +10,8 @@ namespace DashDock.Utils
 
         public int TimeTrackingApiPort { get; set; } = 8000;
 
+        public string NotePageUrl { get; set; } = "https://www.google.com";
+
         [JsonIgnore]
         private static string ConfigPath =>
             Path.Combine(AppContext.BaseDirectory, "app_settings.json");

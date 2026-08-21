@@ -17,6 +17,6 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Header}" />
-        <wpf:WebView2 Grid.Row="1" />
+        <wpf:WebView2 Grid.Row="1" Source="{Binding Url}" />
     </Grid>
 </UserControl>
