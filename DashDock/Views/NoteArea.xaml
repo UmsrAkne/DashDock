@@ -5,11 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
+    xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     d:DataContext="{d:DesignInstance viewModels:NoteAreaViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock Text="{Binding Header}" />
-    </Grid>
+
+    <Border
+        Margin="5"
+        Background="#1d1f23"
+        BorderBrush="#1d1f23"
+        BorderThickness="5"
+        CornerRadius="6">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!-- この Border を消すと、背景の下地がわずかに見えて白い線が出る -->
+            <Border
+                Grid.Row="0"
+                Height="10"
+                Background="#1d1f23" />
+            <wpf:WebView2 Grid.Row="1" Source="{Binding Url}" />
+        </Grid>
+    </Border>
 </UserControl>
