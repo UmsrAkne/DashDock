@@ -5,11 +5,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
+    Margin="5"
     d:DataContext="{d:DesignInstance viewModels:PointAreaViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock Text="{Binding Header}" />
-    </Grid>
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource LightFgBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </UserControl.Resources>
+
+    <Border
+        Padding="8"
+        Background="{StaticResource DarkBgBrush}"
+        CornerRadius="6">
+        <StackPanel>
+            <TextBlock Text="{Binding Header}" />
+            <StackPanel Margin="15,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="15,0"
+                        FontSize="24"
+                        FontWeight="Regular"
+                        Text="{Binding Points, StringFormat={}{0:D} Pts}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Border>
 </UserControl>
