@@ -18,6 +18,11 @@ public partial class App : PrismApplication
         var settings = AppSettings.Load();
         Console.WriteLine("Loaded settings");
         Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
+
+        // 既存の設定ファイルに新しいプロパティが書き込まれていないケースがあり得るため、同じ内容で保存する。
+        // これにより、既存ファイルになかったプロパティが追加される。
+        settings.Save();
+
         containerRegistry.RegisterInstance(settings);
 
         containerRegistry.Register<IToolAreaViewModel, SettingAreaViewModel>();
