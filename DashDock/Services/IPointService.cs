@@ -2,6 +2,6 @@
 {
     public interface IPointService
     {
-        Task<int> GetLatestBalanceAsync(string ipv4, int port);
+        Task<int> GetLatestBalanceAsync();
     }
 }

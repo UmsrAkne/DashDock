@@ -25,6 +25,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IToolAreaViewModel, TimeTrackingAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
 
+        containerRegistry.Register<IPointService, PointService>();
+
         #if DEBUG
         containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
         #else

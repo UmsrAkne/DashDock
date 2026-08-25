@@ -7,6 +7,7 @@ namespace DashDock.Services
 {
     public sealed class PointService : IPointService, IDisposable
     {
+        private readonly AppSettings settings;
         private readonly HttpClient httpClient = new ();
         private bool disposed;
 
@@ -14,11 +15,12 @@ namespace DashDock.Services
         {
             Console.WriteLine("PointService created");
             Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
+            this.settings = settings;
         }
 
-        public async Task<int> GetLatestBalanceAsync(string ipv4, int port)
+        public async Task<int> GetLatestBalanceAsync()
         {
-            var url = $"http://{ipv4}:{port}/api/transactions?limit=2";
+            var url = $"http://{settings.PointServerIpv4}:{settings.PointApiPort}/api/transactions?limit=2";
             var response = await httpClient.GetFromJsonAsync<TransactionResponse>(url);
 
             if (response?.Transactions == null || response.Transactions.Count == 0)
