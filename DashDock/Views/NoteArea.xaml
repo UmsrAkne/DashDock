@@ -12,7 +12,6 @@
     mc:Ignorable="d">
 
     <Border
-        Margin="5"
         Background="#1d1f23"
         BorderBrush="#1d1f23"
         BorderThickness="5"

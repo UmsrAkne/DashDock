@@ -6,8 +6,8 @@
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <Application.Resources>
         <system:Double x:Key="GlobalFontSize">15</system:Double>
-        <SolidColorBrush x:Key="DarkBgBrush" Color="#333355" />
-        <SolidColorBrush x:Key="MediumBgBrush" Color="#444488" />
+        <SolidColorBrush x:Key="DarkBgBrush" Color="#131313" />
+        <SolidColorBrush x:Key="MediumBgBrush" Color="#1d1f23" />
         <SolidColorBrush x:Key="LightBgBrush" Color="SteelBlue" />
         <SolidColorBrush x:Key="LightFgBrush" Color="WhiteSmoke" />
     </Application.Resources>
