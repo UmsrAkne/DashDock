@@ -30,7 +30,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{StaticResource DarkBgBrush}">
         <ItemsControl ItemsSource="{Binding ToolAreaViewModels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -46,7 +46,7 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding}" />
+                    <ContentControl Margin="6,4" Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

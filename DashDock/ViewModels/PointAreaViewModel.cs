@@ -1,12 +1,14 @@
-﻿using DashDock.Services;
+﻿using CommunityToolkit.Mvvm.Input;
+using DashDock.Services;
 using DashDock.Utils;
 
 namespace DashDock.ViewModels
 {
-    public class PointAreaViewModel : BindableBase, IToolAreaViewModel
+    public class PointAreaViewModel : PeriodicTaskAreaViewModelBase, IToolAreaViewModel
     {
-        private int points;
         private readonly IPointService pointService;
+        private int points;
+        private AsyncRelayCommand? initializeAsyncCommand;
 
         public PointAreaViewModel()
         {
@@ -21,8 +23,29 @@ namespace DashDock.ViewModels
             this.pointService = pointService;
         }
 
-        public string Header { get; set; } = "Point Area";
+        public override string Header { get; set; } = "Daily Points";
 
         public int Points { get => points; set => SetProperty(ref points, value); }
+
+        public AsyncRelayCommand InitializeAsyncCommand =>
+            initializeAsyncCommand ??= new AsyncRelayCommand(async () =>
+            {
+                await StartPeriodicTaskAsync();
+            });
+
+        protected override TimeSpan Interval { get; } = TimeSpan.FromHours(1);
+
+        protected override async Task FetchAsync(CancellationToken token)
+        {
+            try
+            {
+                var point = await pointService.GetLatestBalanceAsync();
+                Points = point;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }

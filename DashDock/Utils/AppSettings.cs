@@ -10,6 +10,10 @@ namespace DashDock.Utils
 
         public int TimeTrackingApiPort { get; set; } = 8000;
 
+        public string PointServerIpv4 { get; set; } = "127.0.0.1";
+
+        public int PointApiPort { get; set; } = 18000;
+
         public string NotePageUrl { get; set; } = "https://www.google.com";
 
         [JsonIgnore]
