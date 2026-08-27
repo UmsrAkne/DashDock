@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Windows.Threading;
+using CommunityToolkit.Mvvm.Input;
 using DashDock.Models;
 using DashDock.Services;
 
@@ -7,8 +8,10 @@ namespace DashDock.ViewModels
     public sealed class TimeTrackingAreaViewModel : PeriodicTaskAreaViewModelBase
     {
         private readonly ITimeTrackingService service;
+        private readonly DispatcherTimer dispatcherTimer = new ();
         private TimeEntry? currentEntry;
         private AsyncRelayCommand? initializeAsyncCommand;
+        private bool disposed;
 
         public TimeTrackingAreaViewModel()
         {
@@ -22,9 +25,13 @@ namespace DashDock.ViewModels
         public TimeTrackingAreaViewModel(ITimeTrackingService service)
         {
             Console.WriteLine("TimeTrackingAreaViewModel created");
-            this.service = service;
 
+            this.service = service;
             Console.WriteLine($"injected service: {service}");
+
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Tick += OnTick;
+            dispatcherTimer.Start();
         }
 
         public override string Header { get; set; } = "Time Tracking Area";
@@ -55,6 +62,28 @@ namespace DashDock.ViewModels
                 // 通信エラーなどのハンドリング
                 Console.WriteLine(ex);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    // このクラスでのみ行う終了処理
+                    dispatcherTimer.Stop();
+                    dispatcherTimer.Tick -= OnTick;
+                }
+
+                disposed = true;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private void OnTick(object? sender, EventArgs e)
+        {
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
         }
     }
 }
