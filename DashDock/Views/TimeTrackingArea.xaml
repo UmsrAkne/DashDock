@@ -8,14 +8,25 @@
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:TimeTrackingAreaViewModel}"
     d:DesignHeight="300"
-    d:DesignWidth="300"
+    d:DesignWidth="400"
     mc:Ignorable="d">
+
     <UserControl.Resources>
+        <!-- デフォルト文字色 -->
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource LightFgBrush}" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="18" />
         </Style>
+
+        <!-- 状態バッジ用アニメーション（脈打つエフェクト） -->
+        <Storyboard x:Key="PulseAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation
+                AutoReverse="True"
+                Storyboard.TargetProperty="Opacity"
+                From="1.0"
+                To="0.3"
+                Duration="0:0:1" />
+        </Storyboard>
     </UserControl.Resources>
 
     <b:Interaction.Triggers>
@@ -24,26 +35,96 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
 
+    <!-- 外枠カード：少し角丸 + 境界線 + ドロップシャドウ風 -->
     <Border
-        Padding="8"
+        Padding="16,16,16,4"
         Background="{StaticResource MediumBgBrush}"
-        CornerRadius="6">
-        <StackPanel>
-            <TextBlock Text="{Binding Header}" />
-            <StackPanel Margin="15,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Status: Progress" />
-                    <TextBlock Margin="15,0" Text="[ 10 min ]" />
-                </StackPanel>
+        BorderBrush="#33FFFFFF"
+        BorderThickness="1"
+        CornerRadius="10">
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Opacity="0.8" Text="{Binding CurrentEntry.StartTime, StringFormat='{}{0:yyyy/MM/dd HH:mm:ss}'}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- 1. ヘッダー & ステータスバッジ -->
+            <DockPanel Grid.Row="0" LastChildFill="False">
+
+                <TextBlock
+                    Margin="0,2,0,4"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Text="{Binding CurrentEntry.Description, TargetNullValue='(No Task Selected)'}"
+                    TextTrimming="CharacterEllipsis"
+                    ToolTip="{Binding CurrentEntry.Description}" />
+
+                <!-- 稼働中バッジ (緑の丸 + LIVE/PROGRESS) -->
+                <Border
+                    Height="25"
+                    Padding="8,2"
+                    VerticalAlignment="Center"
+                    Background="#2200E676"
+                    BorderBrush="#FF00E676"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    DockPanel.Dock="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse
+                            Width="6"
+                            Height="6"
+                            Margin="0,0,6,0"
+                            Fill="#FF00E676">
+                            <Ellipse.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard Storyboard="{StaticResource PulseAnimation}" />
+                                </EventTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <TextBlock
+                            FontSize="10"
+                            FontWeight="Bold"
+                            Foreground="#FF00E676"
+                            Text="TRACKING" />
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+            <!-- 2. タスク名（Description）を目立たせる -->
+            <!-- 3. メインの経過時間表示（デジタル時計風に大きく） -->
+            <Border
+                Grid.Row="1"
+                Margin="0,8,0,2"
+                Padding="12,8"
+                Background="#15000000"
+                CornerRadius="6">
+                <DockPanel>
+
                     <TextBlock
-                        Margin="15,0"
-                        FontWeight="Regular"
-                        Text="{Binding CurrentEntry.Description}" />
-                </StackPanel>
-            </StackPanel>
-        </StackPanel>
+                        HorizontalAlignment="Center"
+                        DockPanel.Dock="Left"
+                        FontFamily="Consolas, Cascadia Code, Segoe UI Mono, monospace"
+                        FontSize="26"
+                        FontWeight="DemiBold"
+                        Foreground="#FF64B5F6"
+                        Text="{Binding ElapsedTimeSpan, StringFormat={}{0:hh\\:mm\\:ss}, ConverterCulture=ja-JP}" />
+
+                    <StackPanel
+                        Margin="0,0,0,2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Opacity="0.5"
+                        Orientation="Horizontal">
+                        <!-- クロックアイコン代わりの記号や文字 -->
+                        <TextBlock FontSize="11" Text="▶ Started: " />
+                        <TextBlock FontSize="11" Text="{Binding CurrentEntry.StartTime, StringFormat='{}{0:yyyy/MM/dd HH:mm:ss}'}" />
+                    </StackPanel>
+
+                </DockPanel>
+            </Border>
+        </Grid>
     </Border>
 </UserControl>

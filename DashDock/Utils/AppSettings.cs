@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows;
 
 namespace DashDock.Utils
 {
@@ -15,6 +16,16 @@ namespace DashDock.Utils
         public int PointApiPort { get; set; } = 18000;
 
         public string NotePageUrl { get; set; } = "https://www.google.com";
+
+        public double? WindowTop { get; set; }
+
+        public double? WindowLeft { get; set; }
+
+        public double WindowWidth { get; set; } = 800;
+
+        public double WindowHeight { get; set; } = 600;
+
+        public WindowState WindowState { get; set; } = WindowState.Normal;
 
         [JsonIgnore]
         private static string ConfigPath =>
