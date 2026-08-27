@@ -30,15 +30,12 @@
         Background="{StaticResource MediumBgBrush}"
         CornerRadius="6">
         <StackPanel>
-            <TextBlock Text="{Binding Header}" />
-            <StackPanel Margin="15,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="15,0"
-                        FontSize="24"
-                        FontWeight="Regular"
-                        Text="{Binding Points, StringFormat={}{0:D} Pts}" />
-                </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="15,0"
+                    FontSize="24"
+                    FontWeight="Regular"
+                    Text="{Binding Points, StringFormat={}{0:D} Pts}" />
             </StackPanel>
         </StackPanel>
     </Border>
