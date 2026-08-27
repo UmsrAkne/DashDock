@@ -32,17 +32,15 @@
             <TextBlock Text="{Binding Header}" />
             <StackPanel Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Status: Progress" />
-                    <TextBlock Margin="15,0" Text="[ 10 min ]" />
+                    <TextBlock Opacity="0.8" Text="{Binding CurrentEntry.StartTime, StringFormat='{}{0:yyyy/MM/dd HH:mm:ss}'}" />
+                    <TextBlock FontWeight="Regular" Text="{Binding CurrentEntry.Description}" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Opacity="0.8" Text="{Binding CurrentEntry.StartTime, StringFormat='{}{0:yyyy/MM/dd HH:mm:ss}'}" />
-                    <TextBlock
-                        Margin="15,0"
-                        FontWeight="Regular"
-                        Text="{Binding CurrentEntry.Description}" />
+                <StackPanel Margin="15,0,0,0" Orientation="Horizontal">
+                    <TextBlock Text="Status: Progress" />
+                    <TextBlock Margin="15,0" Text="{Binding ElapsedTimeSpan, StringFormat={}{0:hh\\:mm\\:ss}, ConverterCulture=ja-jP}" />
                 </StackPanel>
+
             </StackPanel>
         </StackPanel>
     </Border>

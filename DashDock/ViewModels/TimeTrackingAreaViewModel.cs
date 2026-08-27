@@ -11,6 +11,7 @@ namespace DashDock.ViewModels
         private readonly DispatcherTimer dispatcherTimer = new ();
         private TimeEntry? currentEntry;
         private AsyncRelayCommand? initializeAsyncCommand;
+        private TimeSpan elapsedTimeSpan;
         private bool disposed;
 
         public TimeTrackingAreaViewModel()
@@ -40,6 +41,12 @@ namespace DashDock.ViewModels
         {
             get => currentEntry;
             set => SetProperty(ref currentEntry, value);
+        }
+
+        public TimeSpan ElapsedTimeSpan
+        {
+            get => elapsedTimeSpan;
+            set => SetProperty(ref elapsedTimeSpan, value);
         }
 
         public AsyncRelayCommand InitializeAsyncCommand =>
@@ -83,7 +90,12 @@ namespace DashDock.ViewModels
 
         private void OnTick(object? sender, EventArgs e)
         {
-            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
+            if (CurrentEntry is not null)
+            {
+                var entry = CurrentEntry;
+                var elapsed = DateTime.Now - entry.StartTime;
+                ElapsedTimeSpan = elapsed;
+            }
         }
     }
 }
