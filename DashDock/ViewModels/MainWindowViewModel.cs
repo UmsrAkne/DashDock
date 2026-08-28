@@ -3,7 +3,7 @@
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
-        private string title = "Wpf Application";
+        private string title = "Dash Dock";
 
         public MainWindowViewModel()
         {
