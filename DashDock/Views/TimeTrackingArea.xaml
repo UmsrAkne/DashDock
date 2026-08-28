@@ -35,12 +35,10 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
 
-    <!-- 外枠カード：少し角丸 + 境界線 + ドロップシャドウ風 -->
+    <!-- 外枠カード：少し角丸 -->
     <Border
         Padding="16,16,16,4"
         Background="{StaticResource MediumBgBrush}"
-        BorderBrush="#33FFFFFF"
-        BorderThickness="1"
         CornerRadius="10">
 
         <Grid>
