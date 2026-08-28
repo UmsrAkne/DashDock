@@ -3,7 +3,8 @@
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
-        private string title = "Wpf Application";
+        private string title = "Dash Dock";
+        private bool isSettingsOpen;
 
         public MainWindowViewModel()
         {
@@ -19,11 +20,30 @@
                 Console.WriteLine(toolAreaViewModel);
             }
 
-            ToolAreaViewModels = toolAreaViewModelsList;
+            var settingAreaViewModel = toolAreaViewModelsList.FirstOrDefault(x => x is SettingAreaViewModel);
+            if (settingAreaViewModel != null)
+            {
+                SettingAreaViewModel = (SettingAreaViewModel)settingAreaViewModel;
+            }
+
+            ToolAreaViewModels = toolAreaViewModelsList.Where(x => x != settingAreaViewModel).ToList();
         }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
         public IReadOnlyList<IToolAreaViewModel> ToolAreaViewModels { get; }
+
+        public SettingAreaViewModel SettingAreaViewModel { get; set; } = new ();
+        
+        public bool IsSettingsOpen
+        {
+            get => isSettingsOpen;
+            set => SetProperty(ref isSettingsOpen, value);
+        }
+
+        public DelegateCommand OpenSettingsCommand => new DelegateCommand(() =>
+        {
+            IsSettingsOpen = !IsSettingsOpen;
+        });
     }
 }

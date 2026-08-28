@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
     xmlns:views="clr-namespace:DashDock.Views"
@@ -50,5 +51,40 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <Button
+            x:Name="SettingsButton"
+            Width="36"
+            Height="36"
+            Margin="0,8,8,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Command="{Binding OpenSettingsCommand}"
+            Foreground="{StaticResource LightFgBrush}"
+            Style="{StaticResource MaterialDesignIconButton}">
+
+            <materialDesign:PackIcon
+                Width="25"
+                Height="25"
+                Kind="Cog" />
+        </Button>
+
+        <Popup
+            AllowsTransparency="True"
+            HorizontalOffset="36"
+            IsOpen="{Binding IsSettingsOpen}"
+            Placement="Left"
+            PlacementTarget="{Binding ElementName=SettingsButton}"
+            StaysOpen="False"
+            VerticalOffset="41">
+            <Border
+                Padding="12"
+                Background="{StaticResource DarkBgBrush}"
+                BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                BorderThickness="1"
+                CornerRadius="4">
+                <ContentControl Content="{Binding SettingAreaViewModel}" />
+            </Border>
+        </Popup>
     </Grid>
 </Window>
