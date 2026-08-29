@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
         <PackageReference Include="MaterialDesignThemes" Version="5.3.3-ci1462" />
+        <PackageReference Include="MaterialDesignThemes.MahApps" Version="5.3.3-ci1462" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4129.50" />
         <PackageReference Include="Prism.DryIoc" Version="9.0.537"/>
         <PackageReference Include="Prism.Wpf" Version="9.0.537"/>
