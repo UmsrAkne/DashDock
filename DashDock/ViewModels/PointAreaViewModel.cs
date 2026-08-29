@@ -33,7 +33,7 @@ namespace DashDock.ViewModels
                 await StartPeriodicTaskAsync();
             });
 
-        protected override TimeSpan Interval { get; } = TimeSpan.FromHours(1);
+        protected override TimeSpan Interval { get; } = TimeSpan.FromMinutes(30);
 
         protected override async Task FetchAsync(CancellationToken token)
         {
