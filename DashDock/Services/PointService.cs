@@ -20,7 +20,7 @@ namespace DashDock.Services
 
         public async Task<int> GetLatestBalanceAsync()
         {
-            var url = $"http://{settings.PointServerIpv4}:{settings.PointApiPort}/api/transactions?limit=2";
+            var url = $"http://{settings.PointServerIpv4}:{settings.PointApiPort}/api/transactions?limit=20";
             var response = await httpClient.GetFromJsonAsync<TransactionResponse>(url);
 
             if (response?.Transactions == null || response.Transactions.Count == 0)
@@ -28,8 +28,8 @@ namespace DashDock.Services
                 throw new InvalidOperationException("No transactions found.");
             }
 
-            // 最新の balance を取り出して返す
-            return response.Transactions[0].Balance;
+            // 最新のレコードを検索するにはシーケンスナンバーの方を見る。サーバー側の仕様により、日時では確実な順番が保証されない
+            return response.Transactions.OrderByDescending(t => t.SequenceNumber).First().Balance;
         }
 
         public void Dispose()
@@ -62,6 +62,9 @@ namespace DashDock.Services
         {
             [JsonPropertyName("balance")]
             public int Balance { get; set; }
+
+            [JsonPropertyName("sequence_number")]
+            public int SequenceNumber { get; set; }
         }
     }
 }
