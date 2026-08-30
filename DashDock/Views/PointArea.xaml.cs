@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace DashDock.Views
+﻿namespace DashDock.Views
 {
-    public partial class PointArea : UserControl
+    public partial class PointArea
     {
         public PointArea()
         {

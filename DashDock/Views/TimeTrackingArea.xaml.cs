@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace DashDock.Views
+﻿namespace DashDock.Views
 {
-    public partial class TimeTrackingArea : UserControl
+    public partial class TimeTrackingArea
     {
         public TimeTrackingArea()
         {
