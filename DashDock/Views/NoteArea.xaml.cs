@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace DashDock.Views
+﻿namespace DashDock.Views
 {
-    public partial class NoteArea : UserControl
+    public partial class NoteArea
     {
         public NoteArea()
         {
