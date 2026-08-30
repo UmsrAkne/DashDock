@@ -2,6 +2,7 @@
     x:Class="DashDock.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:DashDock.Converters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
@@ -28,6 +29,7 @@
             <SolidColorBrush x:Key="MediumBgBrush" Color="#1d1f23" />
             <SolidColorBrush x:Key="LightBgBrush" Color="SteelBlue" />
             <SolidColorBrush x:Key="LightFgBrush" Color="WhiteSmoke" />
+            <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

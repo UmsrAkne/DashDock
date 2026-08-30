@@ -56,6 +56,7 @@
                     DockPanel.Dock="Left"
                     FontSize="16"
                     FontWeight="SemiBold"
+                    Foreground="{Binding CurrentEntry.Description, Converter={StaticResource StringToBrushConverter}}"
                     Text="{Binding CurrentEntry.Description, TargetNullValue='(No Task Selected)'}"
                     TextTrimming="CharacterEllipsis"
                     ToolTip="{Binding CurrentEntry.Description}" />
