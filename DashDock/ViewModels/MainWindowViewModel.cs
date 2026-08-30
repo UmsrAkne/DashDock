@@ -6,9 +6,18 @@
         private string title = "Dash Dock";
         private bool isSettingsOpen;
 
+        // Xaml プレビューで使用されるコンストラクタ。ユーザーが明示的に呼び出すことはない。
         public MainWindowViewModel()
         {
             Console.WriteLine("Execute: MainWindowViewModel()");
+
+            // プレビューを表示するためにビューモデルを詰め込む。
+            ToolAreaViewModels = new List<IToolAreaViewModel>()
+            {
+                new PointAreaViewModel(),
+                new TimeTrackingAreaViewModel(),
+                new NoteAreaViewModel(),
+            };
         }
 
         public MainWindowViewModel(IEnumerable<IToolAreaViewModel> toolAreaViewModels)
