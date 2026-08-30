@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>favicon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,6 +28,10 @@
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </Page>
+
+        <Resource Include="favicon.ico">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
     </ItemGroup>
 
 </Project>
