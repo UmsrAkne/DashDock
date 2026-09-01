@@ -9,6 +9,7 @@ namespace DashDock.ViewModels
         private readonly IPointService pointService;
         private int points;
         private AsyncRelayCommand? initializeAsyncCommand;
+        private AsyncRelayCommand? updatePointCommand;
 
         public PointAreaViewModel()
         {
@@ -31,6 +32,13 @@ namespace DashDock.ViewModels
             initializeAsyncCommand ??= new AsyncRelayCommand(async () =>
             {
                 await StartPeriodicTaskAsync();
+            });
+
+        public AsyncRelayCommand UpdatePointAsyncCommand =>
+            updatePointCommand ??= new AsyncRelayCommand(async () =>
+            {
+                await FetchAsync(CancellationToken.None);
+                await Task.Delay(3000);
             });
 
         protected override TimeSpan Interval { get; } = TimeSpan.FromMinutes(30);

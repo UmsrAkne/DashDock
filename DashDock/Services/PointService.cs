@@ -21,15 +21,32 @@ namespace DashDock.Services
         public async Task<int> GetLatestBalanceAsync()
         {
             var url = $"http://{settings.PointServerIpv4}:{settings.PointApiPort}/api/transactions?limit=20";
-            var response = await httpClient.GetFromJsonAsync<TransactionResponse>(url);
+            const int maxRetries = 3;
 
-            if (response?.Transactions == null || response.Transactions.Count == 0)
+            for (var attempt = 1; attempt <= maxRetries; attempt++)
             {
-                throw new InvalidOperationException("No transactions found.");
+                try
+                {
+                    var response = await httpClient.GetFromJsonAsync<TransactionResponse>(url);
+
+                    if (response?.Transactions == null || response.Transactions.Count == 0)
+                    {
+                        // データが0件なのは「通信成功したけど中身がない」状態なので、リトライしても無駄。即座に例外を投げる
+                        throw new InvalidOperationException("No transactions found.");
+                    }
+
+                    // 最新のレコードを検索するにはシーケンスナンバーの方を見る。サーバー側の仕様により、日時では確実な順番が保証されない
+                    return response.Transactions.OrderByDescending(t => t.SequenceNumber).First().Balance;
+                }
+                catch (HttpRequestException ex) when (attempt < maxRetries)
+                {
+                    // 通信エラー時のみリトライ（InvalidOperationException などはリトライせずに抜ける）
+                    // 簡易的な待機（例: 1回目失敗で500ms、2回目失敗で1000ms待つ）
+                    await Task.Delay(attempt * 500);
+                }
             }
 
-            // 最新のレコードを検索するにはシーケンスナンバーの方を見る。サーバー側の仕様により、日時では確実な順番が保証されない
-            return response.Transactions.OrderByDescending(t => t.SequenceNumber).First().Balance;
+            throw new InvalidOperationException("ここには到達しないはずですが、コンパイラ警告防止用");
         }
 
         public void Dispose()
