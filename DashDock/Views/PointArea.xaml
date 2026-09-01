@@ -24,6 +24,76 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="18" />
         </Style>
+
+        <Style x:Key="UpdateButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="15">
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="Transparent"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#33FFFFFF"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#55FFFFFF"
+                                                Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#11FFFFFF"
+                                                Duration="0:0:0.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="contentPresenter"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.3"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Border
@@ -31,7 +101,7 @@
         Background="{StaticResource MediumBgBrush}"
         CornerRadius="6">
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBlock
                     Margin="15,0"
                     FontSize="24"
@@ -39,21 +109,15 @@
                     Text="{Binding Points, StringFormat={}{0:D} Pts}" />
 
                 <Button
-                    Margin="20,0"
-                    Padding="10,3"
-                    BorderThickness="0"
-                    Command="{Binding UpdatePointAsyncCommand}">
-                    <Button.Resources>
-                        <Style TargetType="Frame">
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                        </Style>
-                    </Button.Resources>
-                    <Button.Content>
-                        <materialDesign:PackIcon
-                            Width="22"
-                            Height="22"
-                            Kind="Update" />
-                    </Button.Content>
+                    Margin="10,0"
+                    BorderBrush="SlateGray"
+                    BorderThickness="0.5"
+                    Command="{Binding UpdatePointAsyncCommand}"
+                    Style="{StaticResource UpdateButtonStyle}">
+                    <materialDesign:PackIcon
+                        Width="22"
+                        Height="22"
+                        Kind="Update" />
                 </Button>
             </StackPanel>
         </StackPanel>
