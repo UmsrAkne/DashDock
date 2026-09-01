@@ -103,13 +103,20 @@
         <StackPanel>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBlock
-                    Margin="15,0"
+                    Margin="15,0,0,0"
                     FontSize="24"
                     FontWeight="Regular"
-                    Text="{Binding Points, StringFormat={}{0:D} Pts}" />
+                    Text="{Binding Points}" />
+
+                <TextBlock
+                    Margin="5"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    FontWeight="Regular"
+                    Text="Pts" />
 
                 <Button
-                    Margin="10,0"
+                    Margin="15,0"
                     BorderBrush="SlateGray"
                     BorderThickness="0.5"
                     Command="{Binding UpdatePointAsyncCommand}"
