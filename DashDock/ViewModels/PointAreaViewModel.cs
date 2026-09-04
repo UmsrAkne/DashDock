@@ -45,14 +45,37 @@ namespace DashDock.ViewModels
 
         protected override async Task FetchAsync(CancellationToken token)
         {
-            try
+            const int maxRetries = 3;
+            const int retryDelaySeconds = 30;
+
+            for (var attempt = 1; attempt <= maxRetries; attempt++)
             {
-                var point = await pointService.GetLatestBalanceAsync();
-                Points = point;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
+                try
+                {
+                    var point = await pointService.GetLatestBalanceAsync();
+                    Points = point;
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] FetchAsync attempt {attempt} failed: {ex.Message}");
+                    
+                    if (attempt < maxRetries)
+                    {
+                        try
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(retryDelaySeconds), token);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[ERROR] FetchAsync max retries reached.");
+                    }
+                }
             }
         }
     }
