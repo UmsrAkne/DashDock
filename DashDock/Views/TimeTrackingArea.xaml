@@ -45,6 +45,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- 1. ヘッダー & ステータスバッジ -->
@@ -124,6 +125,17 @@
 
                 </DockPanel>
             </Border>
+
+            <ProgressBar
+                Grid.Row="2"
+                Height="3"
+                Background="Transparent"
+                BorderThickness="0"
+                Foreground="LightGreen"
+                Maximum="{Binding RefreshMaxSeconds}"
+                Minimum="0"
+                Style="{x:Null}"
+                Value="{Binding RefreshProgress}" />
         </Grid>
     </Border>
 </UserControl>

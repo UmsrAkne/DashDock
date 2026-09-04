@@ -12,6 +12,13 @@ namespace DashDock.ViewModels
         private TimeEntry? currentEntry;
         private AsyncRelayCommand? initializeAsyncCommand;
         private TimeSpan elapsedTimeSpan;
+
+        // 更新までの残り時間のインジケーター用のフィールド
+        private TimeSpan remainingTimeToRefresh;
+        private DateTime nextFetchTime = DateTime.MinValue;
+        private double refreshMaxSeconds = 120.0;
+        private double refreshProgress;
+
         private bool disposed;
 
         public TimeTrackingAreaViewModel()
@@ -55,12 +62,31 @@ namespace DashDock.ViewModels
                 await StartPeriodicTaskAsync();
             });
 
+        public TimeSpan RemainingTimeToRefresh
+        {
+            get => remainingTimeToRefresh;
+            private set => SetProperty(ref remainingTimeToRefresh, value);
+        }
+
+        public double RefreshMaxSeconds
+        {
+            get => refreshMaxSeconds;
+            set => SetProperty(ref refreshMaxSeconds, value);
+        }
+
+        public double RefreshProgress
+        {
+            get => refreshProgress;
+            set => SetProperty(ref refreshProgress, value);
+        }
+
         protected override TimeSpan Interval { get; } = TimeSpan.FromMinutes(2);
 
         protected override async Task FetchAsync(CancellationToken token)
         {
             try
             {
+                nextFetchTime = DateTime.Now + Interval;
                 var entry = await service.GetCurrentTimeEntryAsync();
                 CurrentEntry = entry;
             }
@@ -95,6 +121,17 @@ namespace DashDock.ViewModels
                 var entry = CurrentEntry;
                 var elapsed = DateTime.Now - entry.StartTime;
                 ElapsedTimeSpan = elapsed;
+            }
+
+            var t = nextFetchTime - DateTime.Now;
+            if (t > TimeSpan.Zero)
+            {
+                RemainingTimeToRefresh = t;
+                RefreshProgress = t.TotalSeconds;
+            }
+            else
+            {
+                RemainingTimeToRefresh = TimeSpan.Zero;
             }
         }
     }
