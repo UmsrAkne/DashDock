@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:DashDock.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
@@ -131,11 +132,15 @@
                 Height="3"
                 Background="Transparent"
                 BorderThickness="0"
-                Foreground="LightGreen"
+                Foreground="{Binding CurrentEntry.Description, Converter={StaticResource StringToBrushConverter}}"
                 Maximum="{Binding RefreshMaxSeconds}"
                 Minimum="0"
                 Style="{x:Null}"
-                Value="{Binding RefreshProgress}" />
+                Value="{Binding RefreshProgress}">
+                <b:Interaction.Behaviors>
+                    <behaviors:SmoothProgressBehavior AnimationDuration="0:0:0.2" TargetValue="{Binding RefreshProgress}" />
+                </b:Interaction.Behaviors>
+            </ProgressBar>
         </Grid>
     </Border>
 </UserControl>
