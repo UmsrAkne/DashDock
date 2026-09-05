@@ -131,7 +131,7 @@
                 Height="3"
                 Background="Transparent"
                 BorderThickness="0"
-                Foreground="LightGreen"
+                Foreground="{Binding CurrentEntry.Description, Converter={StaticResource StringToBrushConverter}}"
                 Maximum="{Binding RefreshMaxSeconds}"
                 Minimum="0"
                 Style="{x:Null}"
