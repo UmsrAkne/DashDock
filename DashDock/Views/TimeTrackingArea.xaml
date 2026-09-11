@@ -99,7 +99,7 @@
             <Border
                 Grid.Row="1"
                 Margin="0,8,0,2"
-                Padding="12,8"
+                Padding="12,5"
                 Background="#15000000"
                 CornerRadius="6">
                 <DockPanel>
@@ -108,9 +108,9 @@
                         HorizontalAlignment="Center"
                         DockPanel.Dock="Left"
                         FontFamily="Consolas, Cascadia Code, Segoe UI Mono, monospace"
-                        FontSize="26"
+                        FontSize="24"
                         FontWeight="DemiBold"
-                        Foreground="#FF64B5F6"
+                        Foreground="{Binding CurrentEntry.Description, Converter={StaticResource StringToBrushConverter}}"
                         Text="{Binding ElapsedTimeSpan, StringFormat={}{0:hh\\:mm\\:ss}, ConverterCulture=ja-JP}" />
 
                     <StackPanel

@@ -97,33 +97,36 @@
     </UserControl.Resources>
 
     <Border
-        Padding="8"
+        Padding="8,4"
         Background="{StaticResource MediumBgBrush}"
         CornerRadius="6">
         <StackPanel>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBlock
                     Margin="15,0,0,0"
+                    FontFamily="Consolas, Cascadia Code, Segoe UI Mono, monospace"
                     FontSize="24"
                     FontWeight="Regular"
                     Text="{Binding Points}" />
 
                 <TextBlock
-                    Margin="5"
+                    Margin="5,5,5,2"
                     VerticalAlignment="Bottom"
-                    FontSize="18"
+                    FontSize="15"
                     FontWeight="Regular"
                     Text="Pts" />
 
                 <Button
                     Margin="15,0"
+                    Padding="15,0"
                     BorderBrush="SlateGray"
                     BorderThickness="0.5"
                     Command="{Binding UpdatePointAsyncCommand}"
-                    Style="{StaticResource UpdateButtonStyle}">
+                    Style="{StaticResource UpdateButtonStyle}"
+                    ToolTip="Reload">
                     <materialDesign:PackIcon
-                        Width="22"
-                        Height="22"
+                        Width="20"
+                        Height="20"
                         Kind="Update" />
                 </Button>
             </StackPanel>
