@@ -5,6 +5,7 @@
     {
         private string title = "Dash Dock";
         private bool isSettingsOpen;
+        private IToolAreaViewModel windowTitleSource;
 
         // Xaml プレビューで使用されるコンストラクタ。ユーザーが明示的に呼び出すことはない。
         public MainWindowViewModel()
@@ -36,6 +37,10 @@
             }
 
             ToolAreaViewModels = toolAreaViewModelsList.Where(x => x != settingAreaViewModel).ToList();
+
+            WindowTitleSource =
+                ToolAreaViewModels.FirstOrDefault(x => x is TimeTrackingAreaViewModel)
+                ?? ToolAreaViewModels.First();
         }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
@@ -43,7 +48,13 @@
         public IReadOnlyList<IToolAreaViewModel> ToolAreaViewModels { get; }
 
         public SettingAreaViewModel SettingAreaViewModel { get; set; } = new ();
-        
+
+        public IToolAreaViewModel WindowTitleSource
+        {
+            get => windowTitleSource;
+            set => SetProperty(ref windowTitleSource, value);
+        }
+
         public bool IsSettingsOpen
         {
             get => isSettingsOpen;

@@ -9,6 +9,7 @@ namespace DashDock.ViewModels
     {
         private readonly ITimeTrackingService service;
         private readonly DispatcherTimer dispatcherTimer = new ();
+        private readonly string defaultTitle = "Dash Dock";
         private TimeEntry? currentEntry;
         private AsyncRelayCommand? initializeAsyncCommand;
         private TimeSpan elapsedTimeSpan;
@@ -20,6 +21,7 @@ namespace DashDock.ViewModels
         private double refreshProgress;
 
         private bool disposed;
+        private string header = string.Empty;
 
         public TimeTrackingAreaViewModel()
         {
@@ -37,12 +39,14 @@ namespace DashDock.ViewModels
             this.service = service;
             Console.WriteLine($"injected service: {service}");
 
+            Header = defaultTitle;
+
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Tick += OnTick;
             dispatcherTimer.Start();
         }
 
-        public override string Header { get; set; } = "Time Tracking Area";
+        public override string Header { get => header; set => SetProperty(ref header, value); }
 
         public TimeEntry? CurrentEntry
         {
@@ -121,6 +125,7 @@ namespace DashDock.ViewModels
                 var entry = CurrentEntry;
                 var elapsed = DateTime.Now - entry.StartTime;
                 ElapsedTimeSpan = elapsed;
+                Header = $"{(int)ElapsedTimeSpan.TotalMinutes}m | {CurrentEntry.Description}";
             }
 
             var t = nextFetchTime - DateTime.Now;
