@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
     xmlns:views="clr-namespace:DashDock.Views"
-    Title="{Binding Title}"
+    Title="{Binding WindowTitleSource.Header}"
     Width="1024"
     Height="480"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
