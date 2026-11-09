@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DashDock.ViewModels"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    Height="520"
     d:DataContext="{d:DesignInstance viewModels:NoteAreaViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"

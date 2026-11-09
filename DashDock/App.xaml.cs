@@ -29,6 +29,7 @@ public partial class App
         containerRegistry.Register<IToolAreaViewModel, PointAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, TimeTrackingAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
+        containerRegistry.Register<IToolAreaViewModel, ImageGalleryAreaViewModel>();
 
         containerRegistry.Register<IPointService, PointService>();
 

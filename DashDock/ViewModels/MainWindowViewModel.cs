@@ -18,6 +18,7 @@
                 new PointAreaViewModel(),
                 new TimeTrackingAreaViewModel(),
                 new NoteAreaViewModel(),
+                new ImageGalleryAreaViewModel(),
             };
         }
 
