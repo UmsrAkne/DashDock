@@ -3,6 +3,7 @@ using DashDock.Services;
 using DashDock.Utils;
 using DashDock.ViewModels;
 using DashDock.Views;
+using DotNetEnv;
 
 namespace DashDock;
 
@@ -19,6 +20,8 @@ public partial class App
         Console.WriteLine("Loaded settings");
         Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
 
+        Env.TraversePath().Load();
+
         // 既存の設定ファイルに新しいプロパティが書き込まれていないケースがあり得るため、同じ内容で保存する。
         // これにより、既存ファイルになかったプロパティが追加される。
         settings.Save();
@@ -32,6 +35,13 @@ public partial class App
         containerRegistry.Register<IToolAreaViewModel, ImageGalleryAreaViewModel>();
 
         containerRegistry.Register<IPointService, PointService>();
+
+        var credentials = new Credentials
+        {
+            MemosToken = Environment.GetEnvironmentVariable("MEMOS_TOKEN") ?? string.Empty,
+        };
+
+        containerRegistry.RegisterInstance(credentials);
 
         #if DEBUG
         containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
