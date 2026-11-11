@@ -1,4 +1,5 @@
-﻿using DashDock.Models.Memos;
+﻿using System.Net.Mail;
+using DashDock.Models.Memos;
 using DashDock.Services.Memos;
 using DashDock.Utils;
 using DotNetEnv;
@@ -63,11 +64,14 @@ namespace DashDock.Tests.Services.Memos
         [Explicit("実際のサーバーに通信するため、手動確認時のみ実行する")]
         public async Task DownloadResourceAsync_実際に画像バイナリをダウンロードできること()
         {
-            // 存在するリソース名/IDを指定
-            var resourceName = "resources/xxxx";
+            var dto = new AttachmentDto()
+            {
+                Name = "attachments/gBNRmgZAfJsL7mu75PJrmC",
+                Filename = "a_694_00001_.png",
+            };
 
             // Act
-            var bytes = await client.DownloadAttachmentBytesAsync(new AttachmentDto());
+            var bytes = await client.DownloadAttachmentBytesAsync(dto);
 
             // Assert
             Assert.That(bytes, Is.Not.Null);
