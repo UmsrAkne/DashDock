@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using DashDock.Models.Memos;
 
 namespace DashDock.Services.Memos
@@ -15,6 +16,7 @@ namespace DashDock.Services.Memos
             jsonOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString,
             };
         }
 
@@ -28,7 +30,7 @@ namespace DashDock.Services.Memos
         {
             // memos API の CEL フィルタを使用して画像形式のみに絞り込み
             var filterQuery = Uri.EscapeDataString("mime_type.startsWith('image/')");
-            var requestUrl = $"api/attachments?pageSize={pageSize}&filter={filterQuery}";
+            var requestUrl = $"api/v1/attachments?pageSize={pageSize}&filter={filterQuery}";
 
             if (!string.IsNullOrEmpty(pageToken))
             {

@@ -19,16 +19,29 @@ namespace DashDock.Models.Memos
         [JsonPropertyName("filename")]
         public string Filename { get; init; } = string.Empty;
 
+        private string? mimeType;
+
+        /// <summary>
+        /// MIMEタイプ (例: "image/png", "image/jpeg") - memos API の type フィールド
+        /// </summary>
+        [JsonPropertyName("type")]
+        public string Type { get; init; } = string.Empty;
+
         /// <summary>
         /// MIMEタイプ (例: "image/png", "image/jpeg")
         /// </summary>
         [JsonPropertyName("mimeType")]
-        public string MimeType { get; init; } = string.Empty;
+        public string MimeType
+        {
+            get => !string.IsNullOrEmpty(mimeType) ? mimeType : Type;
+            init => mimeType = value;
+        }
 
         /// <summary>
         /// ファイルサイズ (バイト数)
         /// </summary>
         [JsonPropertyName("size")]
+        [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public long Size { get; init; }
 
         /// <summary>
