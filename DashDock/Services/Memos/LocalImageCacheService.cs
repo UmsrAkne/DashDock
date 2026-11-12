@@ -36,6 +36,17 @@ namespace DashDock.Services.Memos
             return File.Exists(filePath);
         }
 
+        public string GetLocalImagePath(AttachmentDto attachment)
+        {
+            var path = BuildFilePath(attachment.GetAttachmentId() + ".png");
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("キャッシュ画像が見つかりません。", path);
+            }
+
+            return path;
+        }
+
         private string BuildFilePath(string fileName)
         {
             var baseDirectory = AppContext.BaseDirectory;
