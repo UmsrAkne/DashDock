@@ -15,15 +15,31 @@ namespace DashDock.Services.Memos
         public async Task SaveLocalImageAsync(AttachmentDto attachment, byte[] bytes)
         {
             // "name": "attachments/gBNRmgZAfJsL7mu75PJrmC",
-            var fileName = attachment.Name.Replace("attachments/", string.Empty) + ".png";
-            var baseDirectory = AppContext.BaseDirectory;
-            var path = Path.Combine(baseDirectory, fileName);
+            var fileName = attachment.GetAttachmentId() + ".png";
+            var path = BuildFilePath(fileName);
 
             await File.WriteAllBytesAsync(path, bytes);
 
             var jsonPath = Path.ChangeExtension(path, ".json");
             var json = JsonSerializer.Serialize(attachment);
             await File.WriteAllTextAsync(jsonPath, json);
+        }
+
+        /// <summary>
+        /// attachment の情報をもとに、ローカルにファイルが存在するか判定します。
+        /// </summary>
+        /// <param name="attachment">チェックする画像のメタデータ。</param>
+        /// <returns>該当する画像がローカルに存在するかどうか。</returns>
+        public bool ExistsLocalImage(AttachmentDto attachment)
+        {
+            var filePath = BuildFilePath(attachment.GetAttachmentId() + ".png");
+            return File.Exists(filePath);
+        }
+
+        private string BuildFilePath(string fileName)
+        {
+            var baseDirectory = AppContext.BaseDirectory;
+            return Path.Combine(baseDirectory, fileName);
         }
     }
 }

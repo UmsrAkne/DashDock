@@ -72,5 +72,16 @@ namespace DashDock.Models.Memos
                 return MimeType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
             }
         }
+
+        /// <summary>
+        /// Name プロパティからユニークなID部分を取得します。
+        /// </summary>
+        /// <returns>
+        /// "attachments/xyz" の xyz の部分を取得します。
+        /// </returns>
+        public string GetAttachmentId()
+        {
+            return Name.Replace("attachments/", string.Empty);
+        }
     }
 }
