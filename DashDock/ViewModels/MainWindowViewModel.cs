@@ -1,4 +1,6 @@
-﻿namespace DashDock.ViewModels
+﻿using DashDock.Utils;
+
+namespace DashDock.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
@@ -18,6 +20,7 @@
                 new PointAreaViewModel(),
                 new TimeTrackingAreaViewModel(),
                 new NoteAreaViewModel(),
+                new ImageGalleryAreaViewModel(),
             };
         }
 

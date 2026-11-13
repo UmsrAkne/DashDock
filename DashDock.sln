@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashDock", "DashDock\DashDock.csproj", "{3B1BD502-50C3-4037-B16A-AFDD0E35EC38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashDock.Tests", "DashDock.Tests\DashDock.Tests.csproj", "{103A8088-F25D-4051-9E12-E11039070B22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3B1BD502-50C3-4037-B16A-AFDD0E35EC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B1BD502-50C3-4037-B16A-AFDD0E35EC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B1BD502-50C3-4037-B16A-AFDD0E35EC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{103A8088-F25D-4051-9E12-E11039070B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{103A8088-F25D-4051-9E12-E11039070B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{103A8088-F25D-4051-9E12-E11039070B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{103A8088-F25D-4051-9E12-E11039070B22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

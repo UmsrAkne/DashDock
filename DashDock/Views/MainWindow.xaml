@@ -31,6 +31,10 @@
             <views:NoteArea />
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModels:ImageGalleryAreaViewModel}">
+            <views:ImageGalleryArea />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type viewModels:SettingAreaViewModel}">
             <views:SettingArea />
         </DataTemplate>
