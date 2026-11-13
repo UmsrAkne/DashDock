@@ -20,7 +20,7 @@ namespace DashDock.ViewModels
                 new PointAreaViewModel(),
                 new TimeTrackingAreaViewModel(),
                 new NoteAreaViewModel(),
-                new ImageGalleryAreaViewModel(new Credentials()),
+                new ImageGalleryAreaViewModel(),
             };
         }
 

@@ -12,7 +12,7 @@ namespace DashDock.Services.Memos
         /// </summary>
         /// <param name="attachment">生成するファイルの情報</param>
         /// <param name="bytes">生成するファイルのバイト配列</param>
-        public async Task SaveLocalImageAsync(AttachmentDto attachment, byte[] bytes)
+        public virtual async Task SaveLocalImageAsync(AttachmentDto attachment, byte[] bytes)
         {
             // "name": "attachments/gBNRmgZAfJsL7mu75PJrmC",
             var fileName = attachment.GetAttachmentId() + ".png";
@@ -30,13 +30,13 @@ namespace DashDock.Services.Memos
         /// </summary>
         /// <param name="attachment">チェックする画像のメタデータ。</param>
         /// <returns>該当する画像がローカルに存在するかどうか。</returns>
-        public bool ExistsLocalImage(AttachmentDto attachment)
+        public virtual bool ExistsLocalImage(AttachmentDto attachment)
         {
             var filePath = BuildFilePath(attachment.GetAttachmentId() + ".png");
             return File.Exists(filePath);
         }
 
-        public string GetLocalImagePath(AttachmentDto attachment)
+        public virtual string GetLocalImagePath(AttachmentDto attachment)
         {
             var path = BuildFilePath(attachment.GetAttachmentId() + ".png");
             if (!File.Exists(path))

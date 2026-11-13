@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Net.Http;
+using System.Windows;
 using DashDock.Services;
+using DashDock.Services.Memos;
 using DashDock.Utils;
 using DashDock.ViewModels;
 using DashDock.Views;
@@ -34,14 +36,26 @@ public partial class App
         containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
         containerRegistry.Register<IToolAreaViewModel, ImageGalleryAreaViewModel>();
 
+        containerRegistry.Register<IMemosApiClient, MemosApiClient>();
         containerRegistry.Register<IPointService, PointService>();
 
         var credentials = new Credentials
         {
             MemosToken = Environment.GetEnvironmentVariable("MEMOS_TOKEN") ?? string.Empty,
+            BaseUrl = Environment.GetEnvironmentVariable("MEMOS_BASE_URL") ?? string.Empty,
         };
 
         containerRegistry.RegisterInstance(credentials);
+
+        var httpClient = new HttpClient()
+        {
+            BaseAddress = new Uri(credentials.BaseUrl),
+        };
+
+        httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", credentials.MemosToken);
+
+        containerRegistry.RegisterInstance(httpClient);
 
         #if DEBUG
         containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
