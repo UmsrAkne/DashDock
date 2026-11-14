@@ -5,7 +5,7 @@ using DashDock.Services;
 
 namespace DashDock.ViewModels
 {
-    public sealed class TimeTrackingAreaViewModel : PeriodicTaskAreaViewModelBase
+    public sealed class TimeTrackingAreaViewModel : PeriodicTaskAreaViewModelBase, IToolAreaViewModel
     {
         private readonly ITimeTrackingService service;
         private readonly DispatcherTimer dispatcherTimer = new ();
@@ -22,6 +22,7 @@ namespace DashDock.ViewModels
 
         private bool disposed;
         private string header = string.Empty;
+        private bool visible = true;
 
         public TimeTrackingAreaViewModel()
         {
@@ -46,7 +47,9 @@ namespace DashDock.ViewModels
             dispatcherTimer.Start();
         }
 
-        public override string Header { get => header; set => SetProperty(ref header, value); }
+        public string Header { get => header; set => SetProperty(ref header, value); }
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
 
         public TimeEntry? CurrentEntry
         {

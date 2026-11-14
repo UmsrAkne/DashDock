@@ -9,6 +9,7 @@ namespace DashDock.ViewModels
         private readonly LocalImageCacheService? localImageCacheService;
         private string? imagePath;
         private AsyncRelayCommand? initializeAsyncCommand;
+        private bool visible = true;
 
         public ImageGalleryAreaViewModel()
         {
@@ -21,7 +22,9 @@ namespace DashDock.ViewModels
             this.localImageCacheService = localImageCacheService;
         }
 
-        public override string Header { get; set; } = "Image Gallery";
+        public string Header { get; set; } = "Image Gallery";
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
 
         public string? ImagePath
         {

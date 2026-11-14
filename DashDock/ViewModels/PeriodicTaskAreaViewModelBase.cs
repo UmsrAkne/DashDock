@@ -1,16 +1,9 @@
 ﻿namespace DashDock.ViewModels
 {
-    public abstract class PeriodicTaskAreaViewModelBase : BindableBase, IToolAreaViewModel, IDisposable
+    public abstract class PeriodicTaskAreaViewModelBase : BindableBase, IDisposable
     {
         private readonly CancellationTokenSource cts = new();
         private bool disposed;
-        private bool visible = true;
-
-        public abstract string Header { get; set; }
-
-        // Todo: 別の課題で このクラスから IToolAreaViewModel を切り離す。
-        // 理由: このクラスが IToolAreaViewModel を実装しているのは設計的に不自然であるため。
-        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
 
         protected abstract TimeSpan Interval { get; }
 
