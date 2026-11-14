@@ -5,6 +5,7 @@ namespace DashDock.ViewModels
     public class NoteAreaViewModel : BindableBase, IToolAreaViewModel
     {
         private string url = string.Empty;
+        private bool visible;
 
         public NoteAreaViewModel()
         {
@@ -19,6 +20,8 @@ namespace DashDock.ViewModels
         }
 
         public string Header { get; set; } = "Note Area";
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
 
         public string Url { get => url; set => SetProperty(ref url, value); }
     }
