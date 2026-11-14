@@ -41,7 +41,39 @@
     </Window.Resources>
 
     <Grid Background="{StaticResource DarkBgBrush}">
-        <ItemsControl ItemsSource="{Binding ToolAreaViewModels}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Width="50"
+            Margin="2,4,2,4"
+            Background="{StaticResource MediumBgBrush}"
+            CornerRadius="8">
+            <ListBox
+                HorizontalAlignment="Center"
+                Background="Transparent"
+                ItemsSource="{Binding ToolAreaViewModels}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:IToolAreaViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton Margin="0,5" IsChecked="{Binding Visible}">
+                                <ToggleButton.Content>
+                                    <TextBlock FontSize="20" Text="V" />
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <ItemsControl
+            Grid.Row="0"
+            Grid.Column="1"
+            ItemsSource="{Binding ToolAreaViewModels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel LastChildFill="True" />
@@ -51,6 +83,7 @@
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="ContentPresenter">
                     <Setter Property="DockPanel.Dock" Value="Top" />
+                    <Setter Property="Visibility" Value="{Binding Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
 
@@ -63,6 +96,7 @@
 
         <Button
             x:Name="SettingsButton"
+            Grid.Column="1"
             Width="36"
             Height="36"
             Margin="0,8,8,0"
@@ -79,6 +113,7 @@
         </Button>
 
         <Popup
+            Grid.Column="1"
             AllowsTransparency="True"
             HorizontalOffset="36"
             IsOpen="{Binding IsSettingsOpen}"

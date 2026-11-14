@@ -9,7 +9,6 @@ namespace DashDock.ViewModels
         private readonly LocalImageCacheService? localImageCacheService;
         private string? imagePath;
         private AsyncRelayCommand? initializeAsyncCommand;
-        private bool visible;
 
         public ImageGalleryAreaViewModel()
         {

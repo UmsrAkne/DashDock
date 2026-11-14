@@ -4,7 +4,7 @@
     {
         private readonly CancellationTokenSource cts = new();
         private bool disposed;
-        private bool visible;
+        private bool visible = true;
 
         public abstract string Header { get; set; }
 
