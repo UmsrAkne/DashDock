@@ -29,6 +29,8 @@ namespace DashDock.ViewModels
 
         public PackIconKind IconKind { get; set; } = PackIconKind.Image;
 
+        public bool CanExpand { get; set; } = true;
+
         public string? ImagePath
         {
             get => imagePath;

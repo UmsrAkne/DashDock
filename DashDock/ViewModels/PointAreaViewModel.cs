@@ -32,6 +32,8 @@ namespace DashDock.ViewModels
 
         public PackIconKind IconKind { get; set; } = PackIconKind.AlphabetPBox;
 
+        public bool CanExpand { get; set; }
+
         public int Points { get => points; set => SetProperty(ref points, value); }
 
         public AsyncRelayCommand InitializeAsyncCommand =>

@@ -9,5 +9,7 @@ namespace DashDock.ViewModels
         public bool Visible { get; set; }
 
         public PackIconKind IconKind { get; set; }
+
+        public bool CanExpand { get; set; }
     }
 }

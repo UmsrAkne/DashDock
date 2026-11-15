@@ -54,6 +54,8 @@ namespace DashDock.ViewModels
 
         public PackIconKind IconKind { get; set; } = PackIconKind.Clock;
 
+        public bool CanExpand { get; set; }
+
         public TimeEntry? CurrentEntry
         {
             get => currentEntry;

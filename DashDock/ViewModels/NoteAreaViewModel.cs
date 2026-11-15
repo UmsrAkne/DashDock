@@ -26,6 +26,8 @@ namespace DashDock.ViewModels
 
         public PackIconKind IconKind { get; set; } = PackIconKind.Note;
 
+        public bool CanExpand { get; set; } = true;
+
         public string Url { get => url; set => SetProperty(ref url, value); }
     }
 }
