@@ -1,4 +1,5 @@
 ﻿using DashDock.Utils;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -22,6 +23,8 @@ namespace DashDock.ViewModels
         public string Header { get; set; } = "Note Area";
 
         public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.Note;
 
         public string Url { get => url; set => SetProperty(ref url, value); }
     }

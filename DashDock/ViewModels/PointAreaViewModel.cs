@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DashDock.Services;
 using DashDock.Utils;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -28,6 +29,8 @@ namespace DashDock.ViewModels
         public string Header { get; set; } = "Daily Points";
 
         public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.AlphabetPBox;
 
         public int Points { get => points; set => SetProperty(ref points, value); }
 

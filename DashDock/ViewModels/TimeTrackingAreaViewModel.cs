@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DashDock.Models;
 using DashDock.Services;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -50,6 +51,8 @@ namespace DashDock.ViewModels
         public string Header { get => header; set => SetProperty(ref header, value); }
 
         public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.Clock;
 
         public TimeEntry? CurrentEntry
         {

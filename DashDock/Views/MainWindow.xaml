@@ -48,8 +48,8 @@
         </Grid.ColumnDefinitions>
 
         <Border
-            Width="50"
             Margin="2,4,2,4"
+            Padding="5,0"
             Background="{StaticResource MediumBgBrush}"
             CornerRadius="8">
             <ListBox
@@ -61,7 +61,10 @@
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton Margin="0,5" IsChecked="{Binding Visible}">
                                 <ToggleButton.Content>
-                                    <TextBlock FontSize="20" Text="V" />
+                                    <materialDesign:PackIcon
+                                        Width="25"
+                                        Height="25"
+                                        Kind="{Binding IconKind}" />
                                 </ToggleButton.Content>
                             </ToggleButton>
                         </StackPanel>

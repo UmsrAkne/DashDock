@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DashDock.Services.Memos;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -25,6 +26,8 @@ namespace DashDock.ViewModels
         public string Header { get; set; } = "Image Gallery";
 
         public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.Image;
 
         public string? ImagePath
         {
