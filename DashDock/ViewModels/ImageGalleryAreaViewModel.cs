@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DashDock.Services.Memos;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -9,6 +10,7 @@ namespace DashDock.ViewModels
         private readonly LocalImageCacheService? localImageCacheService;
         private string? imagePath;
         private AsyncRelayCommand? initializeAsyncCommand;
+        private bool visible = true;
 
         public ImageGalleryAreaViewModel()
         {
@@ -21,7 +23,13 @@ namespace DashDock.ViewModels
             this.localImageCacheService = localImageCacheService;
         }
 
-        public override string Header { get; set; } = "Image Gallery";
+        public string Header { get; set; } = "Image Gallery";
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.Image;
+
+        public bool CanExpand { get; set; } = true;
 
         public string? ImagePath
         {

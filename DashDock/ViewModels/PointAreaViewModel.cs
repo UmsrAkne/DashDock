@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using DashDock.Services;
 using DashDock.Utils;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
@@ -10,6 +11,7 @@ namespace DashDock.ViewModels
         private int points;
         private AsyncRelayCommand? initializeAsyncCommand;
         private AsyncRelayCommand? updatePointCommand;
+        private bool visible = true;
 
         public PointAreaViewModel()
         {
@@ -24,7 +26,13 @@ namespace DashDock.ViewModels
             this.pointService = pointService;
         }
 
-        public override string Header { get; set; } = "Daily Points";
+        public string Header { get; set; } = "Daily Points";
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.AlphabetPBox;
+
+        public bool CanExpand { get; set; }
 
         public int Points { get => points; set => SetProperty(ref points, value); }
 

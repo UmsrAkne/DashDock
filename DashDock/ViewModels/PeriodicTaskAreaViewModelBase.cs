@@ -1,11 +1,9 @@
 ﻿namespace DashDock.ViewModels
 {
-    public abstract class PeriodicTaskAreaViewModelBase : BindableBase, IToolAreaViewModel, IDisposable
+    public abstract class PeriodicTaskAreaViewModelBase : BindableBase, IDisposable
     {
         private readonly CancellationTokenSource cts = new();
         private bool disposed;
-
-        public abstract string Header { get; set; }
 
         protected abstract TimeSpan Interval { get; }
 

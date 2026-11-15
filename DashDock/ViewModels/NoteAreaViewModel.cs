@@ -1,10 +1,12 @@
 ﻿using DashDock.Utils;
+using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
 {
     public class NoteAreaViewModel : BindableBase, IToolAreaViewModel
     {
         private string url = string.Empty;
+        private bool visible = true;
 
         public NoteAreaViewModel()
         {
@@ -19,6 +21,12 @@ namespace DashDock.ViewModels
         }
 
         public string Header { get; set; } = "Note Area";
+
+        public bool Visible { get => visible; set => SetProperty(ref visible, value); }
+
+        public PackIconKind IconKind { get; set; } = PackIconKind.Note;
+
+        public bool CanExpand { get; set; } = true;
 
         public string Url { get => url; set => SetProperty(ref url, value); }
     }
