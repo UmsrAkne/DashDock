@@ -100,10 +100,8 @@ namespace DashDock.Tests.Services.Memos
                     Content = new StringContent(jsonResponse, System.Text.Encoding.UTF8, "application/json"),
                 });
 
-            using var httpClient = new HttpClient(handlerMock.Object)
-            {
-                BaseAddress = new Uri("https://example.com/"),
-            };
+            using var httpClient = new HttpClient(handlerMock.Object);
+            httpClient.BaseAddress = new Uri("https://example.com/");
 
             var client = new MemosApiClient(httpClient);
 

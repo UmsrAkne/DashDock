@@ -57,7 +57,7 @@ namespace DashDock.Views.Controls
                 if (child == fillTarget)
                 {
                     // 残りの高さを埋める
-                    childHeight = Math.Max(childHeight, finalSize.Height - currentY - nonFillHeightAfter(visibleChildren, child));
+                    childHeight = Math.Max(childHeight, finalSize.Height - currentY - NonFillHeightAfter(visibleChildren, child));
                 }
 
                 child.Arrange(new Rect(0, currentY, finalSize.Width, childHeight));
@@ -67,7 +67,7 @@ namespace DashDock.Views.Controls
             return finalSize;
         }
 
-        private static double nonFillHeightAfter(System.Collections.Generic.List<FrameworkElement> children, FrameworkElement current)
+        private static double NonFillHeightAfter(System.Collections.Generic.List<FrameworkElement> children, FrameworkElement current)
         {
             var index = children.IndexOf(current);
             if (index < 0)
