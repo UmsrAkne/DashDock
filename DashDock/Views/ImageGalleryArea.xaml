@@ -33,12 +33,20 @@
                 Height="10"
                 Background="#1d1f23" />
 
-            <Image
+            <Border
                 Grid.Row="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Source="{Binding ImagePath}"
-                Stretch="Uniform" />
+                ClipToBounds="True"
+                CornerRadius="16">
+                <Border.Background>
+                    <ImageBrush ImageSource="{Binding ImagePath}" Stretch="UniformToFill" />
+                </Border.Background>
+
+                <!-- サイズ確保用のダミーImage（透明） -->
+                <Image
+                    Opacity="0"
+                    Source="{Binding ImagePath}"
+                    Stretch="Uniform" />
+            </Border>
         </Grid>
     </Border>
 
