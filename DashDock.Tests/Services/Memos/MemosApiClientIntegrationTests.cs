@@ -1,5 +1,4 @@
-﻿using System.Net.Mail;
-using DashDock.Models.Memos;
+﻿using DashDock.Models.Memos;
 using DashDock.Services.Memos;
 using DashDock.Utils;
 using DotNetEnv;

@@ -1,13 +1,11 @@
-﻿using DashDock.Utils;
-
-namespace DashDock.ViewModels
+﻿namespace DashDock.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
         private string title = "Dash Dock";
         private bool isSettingsOpen;
-        private IToolAreaViewModel windowTitleSource;
+        private IToolAreaViewModel? windowTitleSource;
 
         // Xaml プレビューで使用されるコンストラクタ。ユーザーが明示的に呼び出すことはない。
         public MainWindowViewModel()
@@ -52,7 +50,7 @@ namespace DashDock.ViewModels
 
         public SettingAreaViewModel SettingAreaViewModel { get; set; } = new ();
 
-        public IToolAreaViewModel WindowTitleSource
+        public IToolAreaViewModel? WindowTitleSource
         {
             get => windowTitleSource;
             set => SetProperty(ref windowTitleSource, value);

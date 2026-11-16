@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace DashDock.Views
+﻿namespace DashDock.Views
 {
-    public partial class ImageGalleryArea : UserControl
+    public partial class ImageGalleryArea
     {
         public ImageGalleryArea()
         {

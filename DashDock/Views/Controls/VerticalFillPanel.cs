@@ -8,12 +8,25 @@ namespace DashDock.Views.Controls
     {
         protected override Size MeasureOverride(Size availableSize)
         {
+            var visibleChildren = InternalChildren.OfType<FrameworkElement>()
+                .Where(c => c.Visibility != Visibility.Collapsed)
+                .ToList();
+
+            if (visibleChildren.Count == 0)
+            {
+                return new Size(0, 0);
+            }
+
+            var fillTarget = visibleChildren.LastOrDefault(c =>
+                c.DataContext is NoteAreaViewModel or ImageGalleryAreaViewModel);
+
             var totalHeight = 0.0;
             var maxWidth = 0.0;
 
-            foreach (UIElement child in InternalChildren)
+            // 1. Fill対象以外の要素を先に計測して高さを確定させる
+            foreach (var child in visibleChildren)
             {
-                if (child == null || child.Visibility == Visibility.Collapsed)
+                if (child == fillTarget)
                 {
                     continue;
                 }
@@ -21,6 +34,18 @@ namespace DashDock.Views.Controls
                 child.Measure(new Size(availableSize.Width, double.PositiveInfinity));
                 totalHeight += child.DesiredSize.Height;
                 maxWidth = Math.Max(maxWidth, child.DesiredSize.Width);
+            }
+
+            // 2. Fill対象の要素には「残りの高さ」を上限として渡す
+            if (fillTarget != null)
+            {
+                var remainingHeight = double.IsPositiveInfinity(availableSize.Height)
+                    ? double.PositiveInfinity
+                    : Math.Max(0.0, availableSize.Height - totalHeight);
+
+                fillTarget.Measure(new Size(availableSize.Width, remainingHeight));
+                totalHeight += fillTarget.DesiredSize.Height;
+                maxWidth = Math.Max(maxWidth, fillTarget.DesiredSize.Width);
             }
 
             var resultWidth = double.IsPositiveInfinity(availableSize.Width) ? maxWidth : availableSize.Width;
@@ -40,24 +65,24 @@ namespace DashDock.Views.Controls
                 return finalSize;
             }
 
-            // NoteAreaViewModel または ImageGalleryAreaViewModel を持つ表示中要素のうち、末尾のものを探す
             var fillTarget = visibleChildren.LastOrDefault(c =>
                 c.DataContext is NoteAreaViewModel or ImageGalleryAreaViewModel);
-
-            var nonFillHeight = visibleChildren
-                .Where(c => c != fillTarget)
-                .Sum(c => c.DesiredSize.Height);
 
             var currentY = 0.0;
 
             foreach (var child in visibleChildren)
             {
-                var childHeight = child.DesiredSize.Height;
+                double childHeight;
 
                 if (child == fillTarget)
                 {
-                    // 残りの高さを埋める
-                    childHeight = Math.Max(childHeight, finalSize.Height - currentY - nonFillHeightAfter(visibleChildren, child));
+                    // 残りの利用可能領域すべてを割り当てる（Math.Max で DesiredSize に縛られないようにする）
+                    var afterHeight = NonFillHeightAfter(visibleChildren, child);
+                    childHeight = Math.Max(0.0, finalSize.Height - currentY - afterHeight);
+                }
+                else
+                {
+                    childHeight = child.DesiredSize.Height;
                 }
 
                 child.Arrange(new Rect(0, currentY, finalSize.Width, childHeight));
@@ -67,7 +92,7 @@ namespace DashDock.Views.Controls
             return finalSize;
         }
 
-        private static double nonFillHeightAfter(System.Collections.Generic.List<FrameworkElement> children, FrameworkElement current)
+        private static double NonFillHeightAfter(List<FrameworkElement> children, FrameworkElement current)
         {
             var index = children.IndexOf(current);
             if (index < 0)
