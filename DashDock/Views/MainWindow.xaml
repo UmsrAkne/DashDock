@@ -53,14 +53,20 @@
             Padding="5,0"
             Background="{StaticResource MediumBgBrush}"
             CornerRadius="8">
-            <ListBox
+
+            <!-- エリアの表示・非表示を切り替えるボタンを配置 -->
+            <ItemsControl
+                x:Name="SideToolBar"
                 HorizontalAlignment="Center"
                 Background="Transparent"
                 ItemsSource="{Binding ToolAreaViewModels}">
-                <ListBox.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewModels:IToolAreaViewModel}">
                         <StackPanel Orientation="Horizontal">
-                            <ToggleButton Margin="0,5" IsChecked="{Binding Visible}">
+                            <ToggleButton
+                                Margin="0,5"
+                                IsChecked="{Binding Visible}"
+                                Style="{StaticResource IconToggleButtonStyle}">
                                 <ToggleButton.Content>
                                     <materialDesign:PackIcon
                                         Width="25"
@@ -70,8 +76,8 @@
                             </ToggleButton>
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Border>
 
         <ItemsControl
