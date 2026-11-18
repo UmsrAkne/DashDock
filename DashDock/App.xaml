@@ -30,6 +30,63 @@
             <SolidColorBrush x:Key="LightBgBrush" Color="SteelBlue" />
             <SolidColorBrush x:Key="LightFgBrush" Color="WhiteSmoke" />
             <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
+
+            <!-- アイコン専用のフラットな ToggleButton スタイル -->
+            <Style x:Key="IconToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="6" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <!-- 背景色や角丸を管理する Border -->
+                            <Border
+                                x:Name="border"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                SnapsToDevicePixels="True">
+                                <ContentPresenter
+                                    x:Name="contentPresenter"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Focusable="False"
+                                    RecognizesAccessKey="True" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <!-- マウスオーバー時: 薄いグレー背景 -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#444444" />
+                                </Trigger>
+                                <!-- 押下時（クリック中）: 少し濃いグレー背景 -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333333" />
+                                </Trigger>
+                                <!-- チェック状態（ON）: アクセントカラー等の背景色 -->
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#444466" />
+                                </Trigger>
+                                <!-- チェック状態 + マウスオーバー時 -->
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsChecked" Value="True" />
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="border" Property="Background" Value="#444488" />
+                                </MultiTrigger>
+                                <!-- 無効（Disabled）時: 半透明化 -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="contentPresenter" Property="Opacity" Value="0.38" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
