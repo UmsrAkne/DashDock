@@ -116,6 +116,25 @@
                     </Border>
                 </Popup>
 
+                <Button
+                    x:Name="NextImageButton"
+                    Width="36"
+                    Height="36"
+                    Margin="0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding ImageGalleryAreaViewModel.ManualFetchCommand}"
+                    DockPanel.Dock="Bottom"
+                    Foreground="{StaticResource LightFgBrush}"
+                    Style="{StaticResource MaterialDesignIconButton}">
+
+                    <materialDesign:PackIcon
+                        Width="25"
+                        Height="25"
+                        Kind="ArrowRightBoldBoxOutline" />
+                </Button>
+
+
             </DockPanel>
         </Border>
 
