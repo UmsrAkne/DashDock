@@ -42,6 +42,12 @@
             WindowTitleSource =
                 ToolAreaViewModels.FirstOrDefault(x => x is TimeTrackingAreaViewModel)
                 ?? ToolAreaViewModels.First();
+
+            var imageGalleryVm = ToolAreaViewModels.FirstOrDefault(x => x is ImageGalleryAreaViewModel);
+            if (imageGalleryVm != null)
+            {
+                ImageGalleryAreaViewModel = (ImageGalleryAreaViewModel)imageGalleryVm;
+            }
         }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
@@ -49,6 +55,8 @@
         public IReadOnlyList<IToolAreaViewModel> ToolAreaViewModels { get; }
 
         public SettingAreaViewModel SettingAreaViewModel { get; set; } = new ();
+
+        public ImageGalleryAreaViewModel? ImageGalleryAreaViewModel { get; set; }
 
         public IToolAreaViewModel? WindowTitleSource
         {
