@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Windows;
 using DashDock.Services;
 using DashDock.Services.Memos;
@@ -22,7 +23,39 @@ public partial class App
         Console.WriteLine("Loaded settings");
         Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
 
-        Env.TraversePath().Load();
+        var baseDir = AppContext.BaseDirectory;
+
+        #if DEBUG
+        // 実行ディレクトリ (bin/Debug/...) から親を辿ってソリューションルートの .env を探索
+        var currentDir = new DirectoryInfo(baseDir);
+        var loaded = false;
+
+        while (currentDir != null)
+        {
+            var envPath = Path.Combine(currentDir.FullName, ".env");
+            if (File.Exists(envPath))
+            {
+                Env.Load(envPath);
+                Console.WriteLine($"Loaded .env from: {envPath}");
+                loaded = true;
+                break;
+            }
+
+            currentDir = currentDir.Parent;
+        }
+
+        if (!loaded)
+        {
+            Console.WriteLine("Warning: .env file not found in parent directories.");
+        }
+        #else
+        // リリース時はアプリ配置フォルダ直下の .env をロード
+        var releaseEnvPath = Path.Combine(baseDir, ".env");
+        if (File.Exists(releaseEnvPath))
+        {
+            Env.Load(releaseEnvPath);
+        }
+        #endif
 
         // 既存の設定ファイルに新しいプロパティが書き込まれていないケースがあり得るため、同じ内容で保存する。
         // これにより、既存ファイルになかったプロパティが追加される。
@@ -47,16 +80,19 @@ public partial class App
 
         containerRegistry.RegisterInstance(credentials);
 
-        var httpClient = new HttpClient()
+        var httpClient = new HttpClient();
+        if (Uri.TryCreate(credentials.BaseUrl, UriKind.Absolute, out var baseUri))
         {
-            BaseAddress = new Uri(credentials.BaseUrl),
-        };
+            httpClient.BaseAddress = baseUri;
+        }
 
-        httpClient.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", credentials.MemosToken);
+        if (!string.IsNullOrEmpty(credentials.MemosToken))
+        {
+            httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", credentials.MemosToken);
+        }
 
         containerRegistry.RegisterInstance(httpClient);
-
         #if DEBUG
         containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
         #else
