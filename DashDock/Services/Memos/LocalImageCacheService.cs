@@ -6,6 +6,13 @@ namespace DashDock.Services.Memos
 {
     public class LocalImageCacheService
     {
+        private readonly string cacheDirectoryName = "cacheImages";
+
+        public LocalImageCacheService()
+        {
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, cacheDirectoryName));
+        }
+
         /// <summary>
         /// 入力された AttachmentDto からファイル名を生成してローカルにファイルとして byte 配列を保存します。
         /// 同時に attachment の情報をサイドカーファイルとして保存します。
@@ -50,7 +57,7 @@ namespace DashDock.Services.Memos
         private string BuildFilePath(string fileName)
         {
             var baseDirectory = AppContext.BaseDirectory;
-            return Path.Combine(baseDirectory, fileName);
+            return Path.Combine(baseDirectory, cacheDirectoryName, fileName);
         }
     }
 }
