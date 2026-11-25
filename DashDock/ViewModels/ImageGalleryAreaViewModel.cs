@@ -91,7 +91,7 @@ namespace DashDock.ViewModels
             {
                 nextFetchTime = DateTime.Now.AddSeconds(RefreshMaxSeconds);
                 var response = await memosApiClient.GetImageAttachmentsAsync(cancellationToken: token);
-                var attachment = response?.Attachments[new Random().Next(0, response.Attachments.Count - 1)];
+                var attachment = response?.Attachments[new Random().Next(0, response.Attachments.Count)];
                 if (attachment == null)
                 {
                     return;
