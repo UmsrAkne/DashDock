@@ -1,6 +1,8 @@
-﻿using System.Windows.Threading;
+﻿using System.Windows.Media;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DashDock.Services.Memos;
+using DashDock.Utils;
 using MaterialDesignThemes.Wpf;
 
 namespace DashDock.ViewModels
@@ -16,6 +18,7 @@ namespace DashDock.ViewModels
         private DateTime nextFetchTime;
         private TimeSpan remainingTimeToRefresh;
         private double refreshProgress;
+        private SolidColorBrush progressBarBrush;
 
         public ImageGalleryAreaViewModel()
         {
@@ -63,6 +66,12 @@ namespace DashDock.ViewModels
 
         public double RefreshMaxSeconds { get; } = 3600;
 
+        public SolidColorBrush ProgressBarBrush
+        {
+            get => progressBarBrush;
+            set => SetProperty(ref progressBarBrush, value);
+        }
+
         public AsyncRelayCommand InitializeAsyncCommand =>
             initializeAsyncCommand ??= new AsyncRelayCommand(async () =>
             {
@@ -94,7 +103,13 @@ namespace DashDock.ViewModels
                     await localImageCacheService.SaveLocalImageAsync(attachment, bytes);
                 }
 
-                ImagePath = localImageCacheService.GetLocalImagePath(attachment);
+                var localPath = localImageCacheService.GetLocalImagePath(attachment);
+                ImagePath = localPath;
+
+                var dominantColor = await ImageColorAnalyzer.CalculateDominantColorFromFileAsync(localPath);
+                var brush = new SolidColorBrush(dominantColor);
+                brush.Freeze();
+                ProgressBarBrush = brush;
             }
             catch (OperationCanceledException)
             {
