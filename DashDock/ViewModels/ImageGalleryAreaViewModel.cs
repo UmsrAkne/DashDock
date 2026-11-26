@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Input;
+using DashDock.Models.Memos;
 using DashDock.Services.Memos;
 using DashDock.Utils;
 using MaterialDesignThemes.Wpf;
@@ -80,6 +81,8 @@ namespace DashDock.ViewModels
 
         protected override TimeSpan Interval { get; } = TimeSpan.FromHours(1);
 
+        private Dictionary<string, AttachmentDto> DisplayHistory { get; set; } = new ();
+
         protected override async Task FetchAsync(CancellationToken token)
         {
             if (memosApiClient == null || localImageCacheService == null)
@@ -91,11 +94,23 @@ namespace DashDock.ViewModels
             {
                 nextFetchTime = DateTime.Now.AddSeconds(RefreshMaxSeconds);
                 var response = await memosApiClient.GetImageAttachmentsAsync(cancellationToken: token);
-                var attachment = response?.Attachments[new Random().Next(0, response.Attachments.Count)];
-                if (attachment == null)
+
+                foreach (var responseAttachment in response.Attachments)
+                {
+                    DisplayHistory.TryAdd(responseAttachment.Name, responseAttachment);
+                }
+
+                var list = DisplayHistory.Where(i => !i.Value.AlreadyDisplay)
+                    .Select(i => i.Value)
+                    .ToList();
+
+                if (list.Count == 0)
                 {
                     return;
                 }
+
+                var index = Random.Shared.Next(list.Count);
+                var attachment = list[index];
 
                 if (!localImageCacheService.ExistsLocalImage(attachment))
                 {
@@ -110,6 +125,8 @@ namespace DashDock.ViewModels
                 var brush = new SolidColorBrush(dominantColor);
                 brush.Freeze();
                 ProgressBarBrush = brush;
+
+                attachment.AlreadyDisplay = true;
             }
             catch (OperationCanceledException)
             {

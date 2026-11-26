@@ -74,6 +74,16 @@ namespace DashDock.Models.Memos
         }
 
         /// <summary>
+        /// 画像をビューですでに表示したかどうか。
+        /// </summary>
+        [JsonIgnore]
+        public bool AlreadyDisplay
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Name プロパティからユニークなID部分を取得します。
         /// </summary>
         /// <returns>
