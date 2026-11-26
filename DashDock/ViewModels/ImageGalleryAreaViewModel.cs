@@ -18,7 +18,7 @@ namespace DashDock.ViewModels
         private DateTime nextFetchTime;
         private TimeSpan remainingTimeToRefresh;
         private double refreshProgress;
-        private SolidColorBrush progressBarBrush;
+        private SolidColorBrush progressBarBrush = new (Colors.LightSkyBlue);
 
         public ImageGalleryAreaViewModel()
         {
