@@ -92,6 +92,15 @@ namespace DashDock.ViewModels
 
             try
             {
+                // すべて表示済みなら履歴をリセット
+                if (DisplayHistory.All(x => x.Value.AlreadyDisplay))
+                {
+                    foreach (var value in DisplayHistory.Select(v => v.Value))
+                    {
+                        value.AlreadyDisplay = false;
+                    }
+                }
+
                 nextFetchTime = DateTime.Now.AddSeconds(RefreshMaxSeconds);
                 var response = await memosApiClient.GetImageAttachmentsAsync(cancellationToken: token);
 
