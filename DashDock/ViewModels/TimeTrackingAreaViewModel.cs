@@ -46,6 +46,8 @@ namespace DashDock.ViewModels
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Tick += OnTick;
             dispatcherTimer.Start();
+
+            UpdateHeader(CurrentEntry);
         }
 
         public string Header { get => header; set => SetProperty(ref header, value); }
@@ -128,13 +130,7 @@ namespace DashDock.ViewModels
 
         private void OnTick(object? sender, EventArgs e)
         {
-            if (CurrentEntry is not null)
-            {
-                var entry = CurrentEntry;
-                var elapsed = DateTime.Now - entry.StartTime;
-                ElapsedTimeSpan = elapsed;
-                Header = $"{(int)ElapsedTimeSpan.TotalMinutes}m | {CurrentEntry.Description}";
-            }
+            UpdateHeader(CurrentEntry);
 
             var t = nextFetchTime - DateTime.Now;
             if (t > TimeSpan.Zero)
@@ -146,6 +142,20 @@ namespace DashDock.ViewModels
             {
                 RemainingTimeToRefresh = TimeSpan.Zero;
             }
+        }
+
+        private void UpdateHeader(TimeEntry? entry)
+        {
+            if (entry == null)
+            {
+                ElapsedTimeSpan = TimeSpan.Zero;
+                Header = "No active timer";
+                return;
+            }
+
+            var elapsed = DateTime.Now - entry.StartTime;
+            ElapsedTimeSpan = elapsed;
+            Header = $"{(int)ElapsedTimeSpan.TotalMinutes}m | {entry.Description}";
         }
     }
 }
